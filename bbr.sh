@@ -40,7 +40,8 @@ fi
 
 get_latest_version() {
 
-    latest_version=$(wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/ | awk -F'\"v' '/v[4-9]./{print $2}' | cut -d/ -f1 | grep -v -  | sort -V | tail -1)
+    # Only use main stable version
+    latest_version=$(wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/ | awk -F'>v' '/v[4-9].[0-9]+\//{print $2}' | cut -d/ -f1 | grep -v -  | sort -V | tail -1)
 
     [ -z ${latest_version} ] && return 1
 
